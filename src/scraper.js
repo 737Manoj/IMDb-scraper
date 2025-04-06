@@ -26,14 +26,14 @@ export default class IMDBScraper {
   async searchMovies(keyword, genre, maxPages = 5, output = 'db') {
     try {
       const movies = [];
-      const count = maxPages * 50; // 50 movies per "page" in one shot
+      const count = maxPages * 50; 
       const searchParams = new URLSearchParams({
         'title': keyword || '',
         'genres': genre,
         'title_type': 'feature',
         'sort': 'user_rating,desc',
-        'count': count, // Total movies to fetch
-        'start': 1 // Start at the beginning
+        'count': count, 
+        'start': 1 
       });
       const searchUrl = `${SEARCH_URL}?${searchParams.toString()}`;
       logger.info(`Scraping ${count} movies for ${keyword || genre} at ${searchUrl}`);
@@ -80,7 +80,7 @@ export default class IMDBScraper {
       await page.setViewport({ width: 1280, height: 800 });
 
       await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-      await delay(2000); // Buffer for full render
+      await delay(2000); 
 
       const itemCount = await page.evaluate(() => document.querySelectorAll('.ipc-metadata-list-summary-item').length);
       logger.info(`Loaded ${itemCount} items`);
@@ -102,7 +102,7 @@ export default class IMDBScraper {
     $('.ipc-metadata-list-summary-item').each((i, element) => {
       try {
         if ($(element).find('span.ipc-metadata-list-item__label:contains("Episode")').length) {
-          return; // Skip episodes
+          return; 
         }
         const titleElement = $(element).find('.ipc-title__text');
         const title = titleElement.text().trim();
@@ -128,7 +128,7 @@ export default class IMDBScraper {
     });
 
     logger.info(`Found ${results.length} movies`);
-    return results; // Just return results, no hasNext
+    return results; 
   }
 
   async _getMovieDetails(movie) {
