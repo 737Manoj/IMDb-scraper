@@ -93,5 +93,5 @@ describe('Database Functions', () => {
     });
     expect(row.title).toBe('Test Movie');
     db.close();
-  }, 10000); // Increase timeout to 10s
+  }, 10000); 
 });
